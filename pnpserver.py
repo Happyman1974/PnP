@@ -3,7 +3,7 @@
 # snom multicast telephone discovery
 #
 #
-# Author: Filip Polsakiewicz <filip.polsakiewicz@snom.de>
+# Author: Happyman1974
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -138,26 +138,6 @@ parser.add_option("-v", "--verbose",
 
 (options, args) = parser.parse_args()
 
-print """                                                                                
-                                                                                
-                                                                                
-      .ijjt;     ..... :tjt:             LLLi    ..... .ijt,    :tjt:             
-    .LLLLLLLLL,  LLLLtLLLLLLL      ,ft   LLLLL.  LLLLLjLLLLLL .LLLLLLL            
-    LLLLLLLLLLLt LLLLLLLLLLLL;   :LLLj   LLLLLL  fLLLLLLLLLLLLLLLLLLLLt           
-   tLLLf,,iLLLt  LLLLLLfLLLLLf. :LLLLf    :LLLLj fLLLLLffLLLLLLLfLLLLLL           
-   LLLL     :t   LLLLL   jLLLf. LLLLL:     :LLLL fLLLL.  :LLLLL   jLLLL           
-   LLLLL;.       LLLLt   ,LLLf.;LLLL        LLLL.fLLLL    LLLLj   :LLLL           
-   jLLLLLLLLf,   LLLLt   ,LLLf.fLLL;        LLLL:fLLLL    LLLLj   .LLLL           
-    LLLLLLLLLLL  LLLLt   ,LLLf.LLLL:  1.1   fLLL:fLLLL    LLLLj   .LLLL           
-     ,fLLLLLLLLt LLLLt   ,LLLf.LLLL.        LLLL.fLLLL    LLLLj   .LLLL           
-         :iLLLLL LLLLt   ,LLLf.LLLL,       .LLLL fLLLL    LLLLj   .LLLL           
-    L;      LLLL LLLLt   ,LLLf.jLLLj      .LLLLf fLLLL    LLLLj   .LLLL           
-   iLL:    .LLLL LLLLt   ,LLLf.iLLLL     ;fLLLL; fLLLL    LLLLj   .LLLL           
-  tLLLLLjjfLLLL; LLLLt   ,LLLf. LLLLf.   fLLLLf  fLLLL    LLLLj   .LLLL           
-   fLLLLLLLLLLf  LLLLt   ,LLLf. ;LLLLL   jLLLt   fLLLL    LLLLj   .LLLL           
-    ,LLLLLLLLi   LLLLt   ,LLLf.  iLLLL   tf;     LLLLL    LLLLj   .LLLL           
-       :,,:.                      .jLL                                          
-"""
 print "\nsnom multicast PnP Provisioning Server (mcserv)\n"
 print "(c) 2008-2009 snom technology AG\n"
 print "=" * 80
@@ -226,7 +206,7 @@ while True:
     	# If a phone has been recognized first send 200 OK
         ok_response = "SIP/2.0 200 OK\r\n"
         ok_response += via_header + "\r\n"
-        ok_response += "Contact: <sip:" + phone.ip_addr + ":" + phone.sip_port + ";transport=tcp;handler=dum>\r\n"
+        ok_response += "Contact: <sip:" + phone.ip_addr + ":" + phone.sip_port + ";transport=udp;handler=dum>\r\n"
         ok_response += to_header + "\r\n"
         ok_response += from_header + "\r\n"
         ok_response += "Call-ID: %s\r\n" % call_id
@@ -247,7 +227,7 @@ while True:
 	notify = "NOTIFY sip:%s:%s SIP/2.0\r\n" % (phone.ip_addr, phone.sip_port)
 	notify += via_header + "\r\n"
 	notify += "Max-Forwards: 20\r\n"
-	notify += "Contact: <sip:%s:%s;transport=TCP;handler=dum>\r\n" % (config['local_ip'], config['local_port'])
+	notify += "Contact: <sip:%s:%s;transport=UDP;handler=dum>\r\n" % (config['local_ip'], config['local_port'])
 	notify += new_to_header + "\r\n"
 	notify += new_from_header + "\r\n"
 	notify += "Call-ID: %s\r\n" % call_id
